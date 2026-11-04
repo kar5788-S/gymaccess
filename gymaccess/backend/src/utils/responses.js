@@ -27,3 +27,9 @@ export function responderConflicto(res, codigo, mensaje, detalles) {
 export function responderNoEncontrado(res, mensaje, detalles) {
   return responderError(res, 404, codigosError.NO_ENCONTRADO, mensaje, detalles);
 }
+
+// Sprint 4: el rango de fechas inválido de los reportes (400) viaja como
+// `RANGO_FECHAS_INVALIDO` desde el manejador central de errores al lanzar
+// `AppError` en `validators/reporte.validators.js` — mismo patrón que
+// `FUERA_DE_CARGA` — con el mensaje fijo del contrato y sin detalle
+// interno (contracts/api.md, FR-021).

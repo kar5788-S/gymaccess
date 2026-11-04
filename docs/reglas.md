@@ -535,3 +535,19 @@ aprobadas por el equipo antes de considerarse definitivas:
 **Redactada:** 2026-10-06
 **Ratificación:** pendiente del equipo
 **Última enmienda:** 2026-10-06
+
+## Complemento operativo — Sprint 4
+
+Sin modificar los principios ni su estado de ratificación, se documentan las
+reglas operativas implementadas para el sprint:
+
+* Los reportes financieros y consolidados de accesos son exclusivos del
+  administrador; el recepcionista conserva su consulta operativa de accesos.
+* El total recaudado considera pagos confirmados. Los pagos pendientes o
+  anulados se conservan y se muestran con su estado.
+* Las alertas incluyen membresías activas que vencen entre hoy y los próximos
+  cinco días. El administrador y el recepcionista pueden consultarlas.
+* La exportación PDF/CSV se realiza en el navegador. Los datos se validan y
+  autorizan en el backend; no se generan archivos permanentes en el servidor.
+* En producción son obligatorias las variables `DB_NOMBRE`, `DB_USUARIO`,
+  `DB_CONTRASENA` y `JWT_SECRET`.

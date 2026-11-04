@@ -289,15 +289,25 @@ El dashboard permitirá al administrador consultar información general del gimn
 
 ## 7.9 Reportes
 
-Permitirá consultar información relacionada con:
+El módulo de reportes permitirá al administrador:
 
-* Clientes.
-* Membresías.
-* Pagos.
-* Adeudos.
-* Accesos.
+* Consultar ingresos por rango de fechas, estado del pago, tipo de membresía
+  y método de pago; únicamente los pagos confirmados suman al total recaudado.
+* Consultar accesos autorizados y rechazados por fecha y cliente, con motivo
+  de rechazo y agrupación de horas pico.
+* Exportar los reportes visibles a PDF y CSV compatible con Excel desde el
+  navegador, sin guardar archivos permanentes en el servidor.
 
-Los reportes se generarán utilizando la información almacenada en la base de datos.
+La generación de reportes se audita. El acceso a los reportes financieros y
+consolidados de asistencia es exclusivo del administrador.
+
+Las alertas de membresías activas que vencen hoy o en los próximos cinco días
+se consultan bajo demanda. Las ven el administrador y el recepcionista en el
+dashboard administrativo y en el módulo de membresías; no se persisten.
+
+La migración 004 agrega el estado del pago y los índices de consulta de los
+reportes, las alertas y la búsqueda de rostros. La configuración de producción
+requiere las variables de conexión MySQL y `JWT_SECRET`.
 
 ---
 

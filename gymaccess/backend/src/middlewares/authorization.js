@@ -76,6 +76,13 @@ export const MATRIZ_PERMISOS = Object.freeze({
   // Sprint 3 — US6: dashboard por rol (clarify Q1)
   'GET /api/dashboard': ['administrador'],
   'GET /api/dashboard/mio': ['entrenador'],
+  // Sprint 4 — US1/US3: reportes financieros y de accesos, exclusivos
+  // del administrador (RN-S4-01, clarify Q4 del 2026-11-04)
+  'GET /api/reports/financial': ['administrador'],
+  'GET /api/reports/accesses': ['administrador'],
+  // Sprint 4 — US2: alertas de vencimiento para recepción y administración
+  // (clarify Q3 del 2026-11-04; entrenador y cliente denegados)
+  'GET /api/alerts/expirations': ['administrador', 'recepcionista'],
 });
 
 // Devuelve los roles permitidos para una clave "MÉTODO /ruta" de la matriz.

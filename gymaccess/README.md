@@ -9,6 +9,8 @@ Sistema con reconocimiento facial.
 - **Sprint 3**: perfiles de entrenador, asignaciones cliente–entrenador,
   rutinas con ejercicios, objetivos y progresos de entrenamiento, consultas
   propias del cliente y dashboard por rol.
+- **Sprint 4**: reportes financieros y de accesos para administración,
+  alertas de membresías próximas a vencer y preparación para despliegue.
 
 ## Estructura
 
@@ -35,6 +37,7 @@ gymaccess/
    mysql -u root -p gymaccess < migrations/001_initial.sql
    mysql -u root -p gymaccess < migrations/002_sprint2.sql
    mysql -u root -p gymaccess < migrations/003_sprint3.sql
+   mysql -u root -p gymaccess < migrations/004_sprint4.sql
    mysql -u root -p gymaccess < seeds/001_admin_inicial.sql
    mysql -u root -p gymaccess < seeds/002_tipos_membresia.sql
    ```
@@ -87,11 +90,26 @@ Los pesos de face-api.js para la captura facial están en
 | Consultas propias del cliente: rutina activa y evolución | `cliente.service` (`/mio/rutina`, `/mio/progreso`) | `MiRutinaPage.jsx` |
 | Dashboard por rol (14 indicadores del admin / 5 del entrenador) | `dashboard.*`, vista `estadisticas_dashboard` | `DashboardPage.jsx` |
 
+## Módulos del Sprint 4
+
+| Módulo | Backend | Frontend |
+|---|---|---|
+| Reporte financiero, exclusivo del administrador | `reportes.*` | `ReportesPage.jsx` |
+| Reporte de accesos y horas pico, exclusivo del administrador | `reportes.*` | `ReportesPage.jsx` |
+| Alertas de membresías activas por vencer en cinco días o menos | `alerta.*` | `AlertasVencimiento.jsx`, dashboard y membresías |
+| Exportación local a PDF y CSV compatible con Excel | — | `services/exportacion.js` |
+
+Los reportes requieren un rango de fechas. El total financiero suma únicamente
+pagos confirmados; las alertas incluyen el día de vencimiento y se muestran a
+administradores y recepcionistas. La exportación se genera en el navegador y no
+crea archivos temporales en el servidor.
+
 ## Pruebas
 
 ```bash
 cd backend  && npm test   # contratos + integración (Vitest + Supertest)
 cd frontend && npm test   # componentes (Vitest + React Testing Library)
+cd frontend && npm run build
 ```
 
 Verificación de extremo a extremo de los quickstarts (contra una base de datos
@@ -101,6 +119,26 @@ temporal `gymaccess_quickstart`, nunca la real):
 cd backend && node scripts/verificar-quickstart.mjs         # Sprint 2: 34 escenarios
 cd backend && node scripts/verificar-quickstart-sprint3.mjs # Sprint 3: 36 escenarios
 ```
+
+## Compilación y despliegue
+
+1. Instalar MySQL 8 y crear la base `gymaccess` con codificación `utf8mb4`.
+2. Desde `database/`, aplicar en orden `migrations/001_initial.sql` hasta
+   `migrations/004_sprint4.sql`, y después `seeds/001_admin_inicial.sql` y
+   `seeds/002_tipos_membresia.sql`. La migración 004 se aplica una sola vez.
+3. Copiar `backend/.env.example` a `backend/.env`. En producción definir
+   `DB_NOMBRE`, `DB_USUARIO`, `DB_CONTRASENA` y `JWT_SECRET`; no usar los
+   valores locales de desarrollo ni subir `.env`.
+4. Desde `backend/`, ejecutar `npm install`, `npm test` y `npm start`.
+5. Desde `frontend/`, copiar `.env.example` a `.env` y configurar
+   `VITE_API_URL`; después ejecutar `npm install`, `npm test` y
+   `npm run build`. El contenido generado queda en `frontend/dist/`; servirlo
+   mediante el servidor web elegido.
+
+En desarrollo, el backend conserva los valores predeterminados documentados y
+emite una advertencia. En producción, no inicia cuando falta alguna de las
+variables obligatorias. La preparación de la configuración no sustituye la
+definición de TLS, dominios y políticas de infraestructura del entorno final.
 
 ## Roles y permisos
 
@@ -133,6 +171,8 @@ no le corresponde al rol.
 | Cliente: propia rutina y evolución | — | — | — | ✅ (solo lectura) |
 | Dashboard completo | ✅ | ❌ | ❌ | ❌ |
 | Dashboard de la propia carga | ❌ | ❌ | ✅ | ❌ |
+| Reportes financieros y consolidados de accesos | ✅ | ❌ | ❌ | ❌ |
+| Alertas de membresías por vencer | ✅ | ✅ | ❌ | ❌ |
 | Auditoría | ✅ | ❌ | ❌ | ❌ |
 
 Reglas de negocio clave visibles en el sistema:

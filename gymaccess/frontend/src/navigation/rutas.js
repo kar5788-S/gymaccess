@@ -50,6 +50,13 @@ export const MODULOS = [
     roles: ['administrador', 'recepcionista', 'entrenador'],
   },
   {
+    clave: 'reports',
+    etiqueta: 'Reportes',
+    ruta: '/reports',
+    icono: 'reportes',
+    roles: ['administrador'],
+  },
+  {
     clave: 'users',
     etiqueta: 'Usuarios',
     ruta: '/users',
@@ -120,6 +127,7 @@ export const RUTA_BASE = {
   asignaciones: '/training/asignaciones',
   rutinas: '/training/rutinas',
   seguimiento: '/training/seguimiento',
+  reportes: '/reports',
   usuarios: '/users',
   'mi-membresia': '/me/membership',
   'mi-rutina': '/me/routine',

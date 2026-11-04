@@ -46,6 +46,13 @@ const ICONOS = {
       <path d="M7 8v8M4 9.5v5M17 8v8M20 9.5v5M7 12h10" />
     </>
   ),
+  reportes: (
+    <>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z" />
+      <path d="M14 3v5h5" />
+      <path d="M9 16v-3M12 16v-5M15 16v-2" />
+    </>
+  ),
   usuarios: (
     <>
       <circle cx="8.5" cy="7.5" r="2.8" />
