@@ -37,3 +37,21 @@ Verificación de cumplimiento de restricciones arquitectónicas obligatorias:
 ## 6. Autorización para Ejecución (`/implement`)
 - **Estado general de QA Preventivo:** Aprobado para iniciar la fase de desarrollo automatizado con el agente.
 - **Responsable:** Karol Salvador Rodríguez González (Equipo GymAccess).
+
+
+---
+
+## 2. Aclaraciones Técnicas y Checklist de QA Preventivo (/speckit.clarify)
+Durante la fase de clarificación previa a la programación, se acordaron y validaron las siguientes reglas de negocio y restricciones técnicas mediante el flujo de Spec Kit:
+
+- [x] **Técnica de Exportación (PDF/CSV):** La exportación de reportes se procesa directamente en el cliente (frontend) a partir de los datos recibidos de la API, cumpliendo la regla RN-S4-03 de evitar la creación de archivos temporales en el servidor.
+- [x] **Criterio de Reporte Financiero:** El reporte financiero muestra el desglose de todos los registros de pago del periodo, pero el total recaudado calcula únicamente los pagos en estado "confirmado" para asegurar la fiabilidad de la auditoría contable.
+- [x] **Consolidación de Accesos por Hora Exacta:** El reporte de horas pico agrupa las asistencias por bloques de 1 hora exacta (ej. 08:00–09:00), identificando con precisión la franja de mayor afluencia operativa.
+- [x] **Matriz de Control de Acceso por Roles (RBAC):** 
+  - El **Administrador** posee acceso completo a reportes financieros, de accesos y alertas.
+  - El **Recepcionista** mantiene la consulta operativa y el panel de alertas de vencimientos, sin acceso a reportes financieros ni consolidados.
+  - El **Entrenador** y el **Cliente** tienen denegado el acceso al panel global de alertas y a reportes de administración (403 Forbidden).
+- [x] **Backend ES Modules:** Verificado que `backend/package.json` mantenga `"type": "module"` sin uso de CommonJS (`require`).
+- [x] **Aislamiento de Secretos:** Configuración de variables de entorno (`.env`) verificada e incluida en `.gitignore`.
+
+---

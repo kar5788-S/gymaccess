@@ -13,6 +13,9 @@ node_modules/
 *.log
 npm-debug.log*
 
+# Documentos de trabajo y temporales de docs/mds
+docs/mds/
+
 # Archivos temporales y del sistema operativo
 *.tmp
 *.temp
