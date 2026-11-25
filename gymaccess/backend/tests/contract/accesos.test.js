@@ -131,8 +131,13 @@ function sembrar(membresia) {
   estado.accesos = [];
 }
 
+// Vencimiento relativo a hoy (+10 días) para que la prueba no caduque con el calendario.
+const VENCIMIENTO_VIGENTE = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000)
+  .toISOString()
+  .slice(0, 10);
+
 beforeEach(() => {
-  sembrar({ estado: 'activa', fecha_vencimiento: '2026-11-13' });
+  sembrar({ estado: 'activa', fecha_vencimiento: VENCIMIENTO_VIGENTE });
 });
 
 describe('POST /api/accesos/intento — autorizado (SC-004)', () => {
@@ -148,7 +153,7 @@ describe('POST /api/accesos/intento — autorizado (SC-004)', () => {
       resultado: 'autorizado',
       motivo: null,
       cliente: { id: 1, nombre: 'Lucía Torres' },
-      membresia: { estado: 'activa', fecha_vencimiento: '2026-11-13' },
+      membresia: { estado: 'activa', fecha_vencimiento: VENCIMIENTO_VIGENTE },
     });
   });
 
