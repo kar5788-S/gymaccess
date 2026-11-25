@@ -18,6 +18,8 @@ import rutinaRutas from './routes/rutina.routes.js';
 import objetivoRutas from './routes/objetivo.routes.js';
 import progresoRutas from './routes/progreso.routes.js';
 import dashboardRutas from './routes/dashboard.routes.js';
+import reportesRutas from './routes/reportes.routes.js';
+import alertasRutas from './routes/alertas.routes.js';
 import { errorHandler } from './middlewares/error-handler.js';
 
 
@@ -48,6 +50,9 @@ app.use('/api/objetivos', objetivoRutas);
 app.use('/api/progresos', progresoRutas);
 // Sprint 3 (US6): dashboard administrativo y panel del entrenador.
 app.use('/api/dashboard', dashboardRutas);
+// Sprint 4: reportes y alertas de vencimiento.
+app.use('/api/reports', reportesRutas);
+app.use('/api/alerts', alertasRutas);
 
 // 404 con envolvente estándar.
 app.use((req, res) => {

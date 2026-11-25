@@ -25,6 +25,8 @@ export const codigosError = {
   USUARIO_YA_ENTRENADOR: 'USUARIO_YA_ENTRENADOR',
   CLIENTE_SIN_ENTRENADOR: 'CLIENTE_SIN_ENTRENADOR',
   FUERA_DE_CARGA: 'FUERA_DE_CARGA',
+  // Sprint 4 (contracts/api.md — códigos nuevos)
+  RANGO_FECHAS_INVALIDO: 'RANGO_FECHAS_INVALIDO',
 };
 
 export class AppError extends Error {

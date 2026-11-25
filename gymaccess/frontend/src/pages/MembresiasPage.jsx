@@ -12,6 +12,7 @@ import {
 } from '../services/membresias.api.js';
 import { listarClientes } from '../services/clientes.api.js';
 import { listarTiposMembresia } from '../services/tipos-membresia.api.js';
+import { obtenerAlertasVencimiento } from '../services/reportes.api.js';
 
 const VACIO = {
   cliente_id: '',
@@ -26,6 +27,7 @@ export default function MembresiasPage() {
   const [membresias, setMembresias] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [tipos, setTipos] = useState([]);
+  const [alertas, setAlertas] = useState([]);
   const [form, setForm] = useState(VACIO);
   const [filtroEstado, setFiltroEstado] = useState('');
   const [mensaje, setMensaje] = useState('');
@@ -41,15 +43,22 @@ export default function MembresiasPage() {
     return lista;
   }
 
+  async function recargarAlertas() {
+    const datos = await obtenerAlertasVencimiento(token);
+    setAlertas(datos.alertas);
+  }
+
   useEffect(() => {
     Promise.all([
       recargar(''),
       listarClientes(token),
       listarTiposMembresia(token, 'activo'),
+      obtenerAlertasVencimiento(token),
     ])
-      .then(([, listaClientes, listaTipos]) => {
+      .then(([, listaClientes, listaTipos, datosAlertas]) => {
         setClientes(listaClientes);
         setTipos(listaTipos);
+        setAlertas(datosAlertas.alertas);
       })
       .catch((e) => setError(e.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,6 +123,7 @@ export default function MembresiasPage() {
         );
       }
       await recargar(filtroEstado);
+      await recargarAlertas();
     } catch (e) {
       setError(e.message);
     }
@@ -221,10 +231,28 @@ export default function MembresiasPage() {
           </tr>
         </thead>
         <tbody>
-          {membresias.map((m) => (
-            <tr key={m.id}>
+          {membresias.map((m) => {
+            const alerta = m.estado === 'activa'
+            ? alertas.find((a) => Number(a.cliente_id) === Number(m.cliente_id))
+            : null;
+            return (
+            <tr
+              key={m.id}
+              className={alerta ? 'fila-vencimiento-proximo' : ''}
+            >
               <td>{m.id}</td>
-              <td>{m.cliente.nombre}</td>
+              <td>
+                {m.cliente.nombre}
+                {alerta && (
+                  <span className="alerta-vencimiento-inline">
+                    {alerta.dias_restantes === 0
+                      ? ' · Vence hoy'
+                      : ` · Vence en ${alerta.dias_restantes} ${
+                          alerta.dias_restantes === 1 ? 'día' : 'días'
+                        }`}
+                  </span>
+                )}
+              </td>
               <td>{m.tipo.nombre}</td>
               <td>{m.fecha_inicio}</td>
               <td>{m.fecha_vencimiento}</td>
@@ -273,7 +301,8 @@ export default function MembresiasPage() {
                 )}
               </td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </section>

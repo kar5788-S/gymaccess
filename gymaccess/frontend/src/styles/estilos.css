@@ -819,6 +819,45 @@ form.tarjeta button:hover:not(:disabled) {
   line-height: 1.55;
 }
 
+.panel-alertas {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-left: 4px solid var(--amarillo);
+  border-radius: 12px;
+  background: rgba(250, 204, 21, 0.07);
+}
+
+.lista-alertas {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0;
+  list-style: none;
+}
+
+.alerta-vencimiento {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(250, 204, 21, 0.45);
+  border-radius: 9px;
+  background: rgba(250, 204, 21, 0.12);
+  color: #fde68a;
+}
+
+.fila-vencimiento-proximo {
+  background: rgba(250, 204, 21, 0.09);
+}
+
+.alerta-vencimiento-inline {
+  display: block;
+  color: #fde68a;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
 /* Texto de ayuda / estados vacíos: bloque informativo sobrio. */
 .ayuda {
   margin: 0.9rem 0 0;

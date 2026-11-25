@@ -26,6 +26,7 @@ import RutinasPage from './pages/RutinasPage.jsx';
 import SeguimientoPage from './pages/SeguimientoPage.jsx';
 import MiRutinaPage from './pages/MiRutinaPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
+import ReportesPage from './pages/ReportesPage.jsx';
 import { MODULOS } from './navigation/rutas.js';
 
 // Acceso rápido a los módulos permitidos tras iniciar sesión.
@@ -221,6 +222,16 @@ function Aplicacion() {
             element={
               <ProtectedRoute roles={['administrador']}>
                 <UsuariosPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Sprint 4: reportes financieros y de accesos (solo admin) */}
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute roles={['administrador']}>
+                <ReportesPage />
               </ProtectedRoute>
             }
           />

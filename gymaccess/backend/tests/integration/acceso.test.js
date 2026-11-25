@@ -275,7 +275,12 @@ beforeEach(() => {
 });
 
 // Prepara cliente con usuario, rostro, tipo y membresía viva.
-async function preparar({ fechaInicio = '2026-10-14' } = {}) {
+// Inicio relativo a hoy (-10 días): con 30 días de duración la membresía sigue vigente.
+const INICIO_VIGENTE = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000)
+  .toISOString()
+  .slice(0, 10);
+
+async function preparar({ fechaInicio = INICIO_VIGENTE } = {}) {
   const cliente = await request(app)
     .post('/api/clientes')
     .set('Authorization', `Bearer ${tokenAdmin()}`)

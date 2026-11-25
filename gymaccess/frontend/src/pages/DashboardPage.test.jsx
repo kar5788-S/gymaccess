@@ -22,6 +22,10 @@ vi.mock('../services/dashboard.api.js', () => ({
   obtenerMiDashboard: vi.fn(),
 }));
 
+vi.mock('../services/reportes.api.js', () => ({
+  obtenerAlertasVencimiento: vi.fn(async () => ({ alertas: [] })),
+}));
+
 import { obtenerDashboard, obtenerMiDashboard } from '../services/dashboard.api.js';
 
 const cerosAdmin = {
@@ -88,6 +92,7 @@ describe('DashboardPage', () => {
     expect(screen.getByText('Clientes en mi carga')).toBeTruthy();
     expect(screen.queryByText('Ingresos del periodo')).toBeNull();
     expect(screen.queryByText('Pagos del periodo')).toBeNull();
+    expect(screen.queryByText('Alertas de vencimiento próximo')).toBeNull();
     expect(obtenerDashboard).not.toHaveBeenCalled();
   });
 });

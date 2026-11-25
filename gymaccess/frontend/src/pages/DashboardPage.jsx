@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { obtenerDashboard, obtenerMiDashboard } from '../services/dashboard.api.js';
+import AlertasVencimiento from '../components/AlertasVencimiento.jsx';
 
 const ETIQUETAS_ADMIN = [
   ['clientes_total', 'Clientes totales'],
@@ -116,6 +117,8 @@ export default function DashboardPage() {
           ))}
         </div>
       )}
+
+      {!esEntrenador && <AlertasVencimiento token={token} />}
 
       {esEntrenador && (
         <p className="ayuda">
